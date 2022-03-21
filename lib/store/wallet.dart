@@ -35,6 +35,8 @@ class WalletState extends ChangeNotifier {
   /// Logs out and removes this wallet from the app.
   Future<void> logout() async {
     _passphrase = null;
+    // Do not remember anything for the current user.
+    await _secureStorage.deleteAll();
     notifyListeners();
   }
 

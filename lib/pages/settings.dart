@@ -10,14 +10,14 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  void _onLogout() {
+  Future<void> _onLogout() async {
     // Go to intro page once logged out.
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => const IntroPage()),
       (route) => false,
     );
-    WalletState.of(context).logout();
+    await WalletState.of(context).logout();
   }
 
   @override
