@@ -13,6 +13,9 @@ class WalletState extends ChangeNotifier {
   /// The passphrase of the current wallet.
   String? get passphrase => _passphrase;
 
+  /// If the user has a wallet.
+  bool get hasWallet => _passphrase != null;
+
   /// Initializes the state from the persisted state.
   Future<void> initializeState() async {
     _passphrase = await _secureStorage.read(key: _passphraseKey);
