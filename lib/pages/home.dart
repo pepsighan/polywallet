@@ -27,7 +27,11 @@ class HomePage extends StatelessWidget {
           for (final token in Token.values)
             ListTile(
               key: Key(token.index.toString()),
+              // TODO: Show proper icons and coin value.
+              leading: const CircleAvatar(child: Icon(Icons.currency_bitcoin)),
               title: Text(token.asString),
+              subtitle: const Text('\$4,000.00'),
+              trailing: Text('0 ${token.ticker}'),
             ),
         ],
       ),
