@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:polywallet/pages/settings.dart';
+import 'package:polywallet/pages/token.dart';
 import 'package:polywallet/store/tokens.dart';
 
 class HomePage extends StatelessWidget {
@@ -32,6 +33,14 @@ class HomePage extends StatelessWidget {
               title: Text(token.asString),
               subtitle: const Text('\$4,000.00'),
               trailing: Text('0 ${token.ticker}'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TokenPage(token: token),
+                  ),
+                );
+              },
             ),
         ],
       ),
