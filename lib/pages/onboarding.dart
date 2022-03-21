@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polywallet/pages/existingwallet.dart';
 import 'package:polywallet/pages/newwallet.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -59,7 +60,14 @@ class OnboardingPage extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(top: 8),
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ExistingWalletPage(),
+                  ),
+                );
+              },
               child: const Text('I already have a wallet'),
             ),
           ),
