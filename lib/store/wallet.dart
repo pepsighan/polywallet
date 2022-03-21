@@ -19,13 +19,6 @@ class WalletState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Generates a passphrase for a new wallet.
-  Future<void> generateWalletPassphrase() async {
-    _passphrase = generateMnemonic();
-    await _secureStorage.write(key: _passphraseKey, value: _passphrase);
-    notifyListeners();
-  }
-
   /// Restores a passphrase for an existing wallet.
   Future<void> restoreWalletPassphrase(String passphrase) async {
     final isValid = validateMnemonic(passphrase);

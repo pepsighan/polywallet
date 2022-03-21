@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polywallet/pages/newwallet.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -47,7 +48,12 @@ class OnboardingPage extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const NewWalletPage()),
+              );
+            },
             child: const Text('Create a new wallet'),
           ),
           Container(
