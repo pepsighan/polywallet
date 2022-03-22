@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:polywallet/tokens.dart';
+import 'package:polywallet/widgets/loadingspinner.dart';
 
 class SendPage extends StatefulWidget {
   const SendPage({Key? key, required this.token}) : super(key: key);
@@ -16,15 +17,40 @@ class _SendPageState extends State<SendPage> {
   final _recipientField = TextEditingController();
   final _amountField = TextEditingController();
 
+  bool _isSending = false;
+
   Future<void> _onSend() async {
     final valid = _formKey.currentState?.validate();
     if (valid != true) {
       return;
     }
 
+    setState(() {
+      _isSending = true;
+    });
+
     final address = _recipientField.text;
-    final amount = double.parse(_amountField.text);
-    await send(context, token: widget.token, address: address, amount: amount);
+    try {
+      final amount = double.parse(_amountField.text);
+      await send(context,
+          token: widget.token, address: address, amount: amount);
+      _formKey.currentState!.reset();
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Successfully sent ${widget.token.ticker}.'),
+        backgroundColor: Colors.green,
+      ));
+    } catch (err) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Failed to send ${widget.token.ticker}.'),
+        backgroundColor: Colors.red,
+      ));
+      rethrow;
+    } finally {
+      setState(() {
+        _isSending = false;
+      });
+    }
   }
 
   @override
@@ -72,8 +98,8 @@ class _SendPageState extends State<SendPage> {
             Container(
               margin: const EdgeInsets.only(top: 16),
               child: ElevatedButton(
-                onPressed: _onSend,
-                child: const Text('Send'),
+                onPressed: !_isSending ? _onSend : null,
+                child: _isSending ? const LoadingSpinner() : const Text('Send'),
               ),
             )
           ],
