@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polywallet/pages/send.dart';
 import 'package:polywallet/store/tokens.dart';
 
 class TokenPage extends StatelessWidget {
@@ -50,7 +51,14 @@ class TokenPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SendPage(token: token),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
