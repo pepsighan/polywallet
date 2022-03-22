@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:polywallet/pages/intro.dart';
+import 'package:polywallet/store/tokens.dart';
 import 'package:polywallet/store/wallet.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => WalletState()),
+        ChangeNotifierProvider(create: (context) => TokenState()),
       ],
       child: MaterialApp(
         title: 'Polywallet',
