@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:polywallet/store/tokens.dart';
 
 class SendPage extends StatefulWidget {
@@ -11,8 +12,16 @@ class SendPage extends StatefulWidget {
 }
 
 class _SendPageState extends State<SendPage> {
+  final _formKey = GlobalKey<FormState>();
   final _recipientField = TextEditingController();
   final _amountField = TextEditingController();
+
+  Future<void> _onSend() async {
+    final valid = _formKey.currentState?.validate();
+    if (valid != true) {
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,37 +29,50 @@ class _SendPageState extends State<SendPage> {
       appBar: AppBar(
         title: Text('Send ${widget.token.ticker}'),
       ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 24),
-            child: TextField(
-              controller: _recipientField,
-              decoration: const InputDecoration(
-                label: Text('Recipient Address'),
-                border: OutlineInputBorder(),
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 24),
+              child: TextFormField(
+                controller: _recipientField,
+                decoration: const InputDecoration(
+                  label: Text('Recipient Address'),
+                  border: OutlineInputBorder(),
+                ),
               ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 16),
-            child: TextField(
-              controller: _amountField,
-              decoration: InputDecoration(
-                label: Text('${widget.token.ticker} Amount'),
-                border: const OutlineInputBorder(),
+            Container(
+              margin: const EdgeInsets.only(top: 16),
+              child: TextFormField(
+                controller: _amountField,
+                decoration: InputDecoration(
+                  label: Text('${widget.token.ticker} Amount'),
+                  border: const OutlineInputBorder(),
+                ),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$'))
+                ],
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                  signed: false,
+                ),
+                validator: (text) => (double.tryParse(text ?? '') ?? 0) == 0
+                    ? 'Provide an amount'
+                    : null,
               ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 16),
-            child: ElevatedButton(
-              onPressed: () {},
-              child: const Text('Send'),
-            ),
-          )
-        ],
+            Container(
+              margin: const EdgeInsets.only(top: 16),
+              child: ElevatedButton(
+                onPressed: _onSend,
+                child: const Text('Send'),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
