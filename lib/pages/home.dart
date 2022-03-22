@@ -23,26 +23,29 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: ListView(
-        children: [
-          for (final token in Token.values)
-            ListTile(
-              key: Key(token.index.toString()),
-              // TODO: Show proper icons and coin value.
-              leading: const CircleAvatar(child: Icon(Icons.currency_bitcoin)),
-              title: Text(token.asString),
-              subtitle: const Text('\$4,000.00'),
-              trailing: Text('0 ${token.ticker}'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TokenPage(token: token),
-                  ),
-                );
-              },
-            ),
-        ],
+      body: ListView.separated(
+        separatorBuilder: (context, index) =>
+            Divider(key: Key(index.toString()), height: 0),
+        itemBuilder: (context, index) => ListTile(
+          key: Key(index.toString()),
+          // TODO: Show proper icons and coin value.
+          leading: const CircleAvatar(child: Icon(Icons.currency_bitcoin)),
+          title: Text(Token.values[index].asString),
+          trailing: Text('0 ${Token.values[index].ticker}'),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 4,
+            horizontal: 16,
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TokenPage(token: Token.values[index]),
+              ),
+            );
+          },
+        ),
+        itemCount: Token.values.length,
       ),
     );
   }
