@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:polywallet/pages/settings.dart';
 import 'package:polywallet/pages/token.dart';
-import 'package:polywallet/store/tokens.dart';
+import 'package:polywallet/tokens.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

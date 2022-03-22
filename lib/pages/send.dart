@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:polywallet/store/tokens.dart';
+import 'package:polywallet/tokens.dart';
 
 class SendPage extends StatefulWidget {
   const SendPage({Key? key, required this.token}) : super(key: key);
@@ -21,6 +21,10 @@ class _SendPageState extends State<SendPage> {
     if (valid != true) {
       return;
     }
+
+    final address = _recipientField.text;
+    final amount = double.parse(_amountField.text);
+    await send(context, token: widget.token, address: address, amount: amount);
   }
 
   @override
@@ -42,6 +46,7 @@ class _SendPageState extends State<SendPage> {
                   label: Text('Recipient Address'),
                   border: OutlineInputBorder(),
                 ),
+                validator: (text) => text?.isEmpty ?? true ? 'Required' : null,
               ),
             ),
             Container(

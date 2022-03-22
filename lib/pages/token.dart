@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:polywallet/pages/send.dart';
-import 'package:polywallet/store/tokens.dart';
+import 'package:polywallet/tokens.dart';
 
 class TokenPage extends StatelessWidget {
   const TokenPage({Key? key, required this.token}) : super(key: key);
