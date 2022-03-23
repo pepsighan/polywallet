@@ -5,7 +5,7 @@ import 'package:decimal/decimal.dart';
 final uatomInAtom = Decimal.fromInt(1000000);
 final cosmosNetworkInfo = NetworkInfo.fromSingleHost(
   bech32Hrp: 'cosmos',
-  host: 'https://rpc.one.theta-devnet.polypore.xyz',
+  host: 'https://rpc.sentry-01.theta-testnet.polypore.xyz',
 );
 final _bankClient = bank.QueryClient(cosmosNetworkInfo.gRPCChannel);
 
