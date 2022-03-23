@@ -5,6 +5,7 @@ import 'package:polywallet/tokens/ethereum.dart';
 import 'package:polywallet/tokens/polygon.dart';
 import 'package:polywallet/tokens/solana.dart';
 import 'package:polywallet/tokens/tokens.dart';
+import 'package:provider/provider.dart';
 
 final _tokenBalance = {
   Token.cosmos: getAtomBalance,
@@ -39,6 +40,16 @@ class TokenState extends ChangeNotifier {
     final balance = await getBalance(mnemonic);
     _tokenMap[token] = TokenMeta(balance: balance);
     notifyListeners();
+  }
+
+  /// Loads the balance for all the tokens.
+  Future<void> loadAllBalances(BuildContext context) async {
+    await Future.wait(Token.values.map((e) => loadBalance(context, token: e)));
+  }
+
+  /// Gets the TokenState from the context.
+  static TokenState of(BuildContext context) {
+    return Provider.of<TokenState>(context, listen: false);
   }
 }
 
