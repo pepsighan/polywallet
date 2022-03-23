@@ -17,7 +17,7 @@ Future<void> sendEther(
   String address,
   Decimal amount,
 ) async {
-  final privateKey = EthPrivateKey.fromHex(mnemonicToSeedHex(mnemonic));
+  final privateKey = EthPrivateKey.fromHex(mnemonicToEntropy(mnemonic));
   await _ethClient.sendTransaction(
     privateKey,
     Transaction(
@@ -27,12 +27,13 @@ Future<void> sendEther(
         (amount * weiInEth).toBigInt(),
       ),
     ),
+    chainId: 4, // Rinkeby chain ID.
   );
 }
 
 /// Gets the ETH balance in Wei.
 Future<BigInt> getEtherBalance(String mnemonic) async {
-  final privateKey = EthPrivateKey.fromHex(mnemonicToSeedHex(mnemonic));
+  final privateKey = EthPrivateKey.fromHex(mnemonicToEntropy(mnemonic));
   final balance = await _ethClient.getBalance(privateKey.address);
   return balance.getInWei;
 }

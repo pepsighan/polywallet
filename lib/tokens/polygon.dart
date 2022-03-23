@@ -17,7 +17,7 @@ Future<void> sendMatic(
   String address,
   Decimal amount,
 ) async {
-  final privateKey = EthPrivateKey.fromHex(mnemonicToSeedHex(mnemonic));
+  final privateKey = EthPrivateKey.fromHex(mnemonicToEntropy(mnemonic));
   await _ethClient.sendTransaction(
     privateKey,
     Transaction(
@@ -27,12 +27,13 @@ Future<void> sendMatic(
         (amount * weiInMatic).toBigInt(),
       ),
     ),
+    chainId: 80001, // Polygon Mumbai chain ID.
   );
 }
 
 /// Gets the MATIC balance in Wei.
 Future<BigInt> getMaticBalance(String mnemonic) async {
-  final privateKey = EthPrivateKey.fromHex(mnemonicToSeedHex(mnemonic));
+  final privateKey = EthPrivateKey.fromHex(mnemonicToEntropy(mnemonic));
   final balance = await _ethClient.getBalance(privateKey.address);
   return balance.getInWei;
 }

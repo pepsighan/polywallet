@@ -51,7 +51,9 @@ extension TokenExtension on Token {
             .bech32Address;
       case Token.ethereum:
       case Token.polygon:
-        return EthPrivateKey.fromHex(mnemonicToSeedHex(mnemonic)).address.hex;
+        return EthPrivateKey.fromHex(mnemonicToEntropy(mnemonic))
+            .address
+            .hexEip55;
       case Token.solana:
         final keypair = await Ed25519HDKeyPair.fromMnemonic(mnemonic);
         return keypair.address;
