@@ -16,7 +16,9 @@ class TokenState extends ChangeNotifier {
   Future<void> loadBalance(
     BuildContext context, {
     required Token token,
-  }) async {}
+  }) async {
+
+  }
 }
 
 /// The information about a token in the context of the wallet.

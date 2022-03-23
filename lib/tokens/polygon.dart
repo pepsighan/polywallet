@@ -29,3 +29,9 @@ Future<void> sendMatic(
     ),
   );
 }
+
+/// Gets the MATIC balance in Wei.
+Future<EtherAmount> getMaticBalance(String mnemonic) async {
+  final privateKey = EthPrivateKey.fromHex(mnemonicToSeedHex(mnemonic));
+  return await _ethClient.getBalance(privateKey.address);
+}

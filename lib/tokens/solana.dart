@@ -21,3 +21,9 @@ Future<void> sendSol(
     lamports: lamports,
   );
 }
+
+/// Gets the SOL balance in lamports.
+Future<int> getSolBalance(String mnemonic) async {
+  final wallet = await Ed25519HDKeyPair.fromMnemonic(mnemonic);
+  return await _solanaClient.rpcClient.getBalance(wallet.address);
+}
