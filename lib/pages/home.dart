@@ -21,9 +21,19 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Polywallet'),
+        title: Column(
+          children: [
+            const Text('Polywallet'),
+            Text(
+              'Test Network',
+              style: theme.textTheme.caption?.apply(color: Colors.white),
+            ),
+          ],
+        ),
         actions: [
           IconButton(
             onPressed: () {
