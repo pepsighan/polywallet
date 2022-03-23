@@ -4,37 +4,37 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 const _secureStorage = FlutterSecureStorage();
-const _passphraseKey = 'walletPassphrase';
+const _mnemonicKey = 'walletMnemonic';
 
 /// State for the current wallet of the app.
 class WalletState extends ChangeNotifier {
-  String? _passphrase;
+  String? _mnemonic;
 
-  /// The passphrase of the current wallet.
-  String? get passphrase => _passphrase;
+  /// The mnemonic of the current wallet.
+  String? get mnemonic => _mnemonic;
 
   /// If the user has a wallet.
-  bool get hasWallet => _passphrase != null;
+  bool get hasWallet => _mnemonic != null;
 
   /// Initializes the state from the persisted state.
   Future<void> initializeState() async {
-    _passphrase = await _secureStorage.read(key: _passphraseKey);
+    _mnemonic = await _secureStorage.read(key: _mnemonicKey);
     notifyListeners();
   }
 
-  /// Restores a passphrase for an existing wallet.
-  Future<void> restoreWalletPassphrase(String passphrase) async {
-    final isValid = validateMnemonic(passphrase);
+  /// Restores a mnemonic for an existing wallet.
+  Future<void> restoreWalletMnemonic(String mnemonic) async {
+    final isValid = validateMnemonic(mnemonic);
     if (isValid) {
-      _passphrase = passphrase;
-      await _secureStorage.write(key: _passphraseKey, value: _passphrase);
+      _mnemonic = mnemonic;
+      await _secureStorage.write(key: _mnemonicKey, value: _mnemonic);
       notifyListeners();
     }
   }
 
   /// Logs out and removes this wallet from the app.
   Future<void> logout() async {
-    _passphrase = null;
+    _mnemonic = null;
     // Do not remember anything for the current user.
     await _secureStorage.deleteAll();
     notifyListeners();

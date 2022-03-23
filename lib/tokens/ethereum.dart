@@ -9,23 +9,31 @@ final _ethClient = Web3Client(
   _httpClient,
 );
 
-final _weiInEth = Decimal.fromInt(10).pow(18);
+final weiInEth = Decimal.fromInt(10).pow(18);
 
 /// Sends ETH [amount] to the destination [address].
 Future<void> sendEther(
-  String passphrase,
+  String mnemonic,
   String address,
   Decimal amount,
 ) async {
-  final privateKey = EthPrivateKey.fromHex(mnemonicToSeedHex(passphrase));
+  final privateKey = EthPrivateKey.fromHex(mnemonicToEntropy(mnemonic));
   await _ethClient.sendTransaction(
     privateKey,
     Transaction(
       to: EthereumAddress.fromHex(address),
       value: EtherAmount.fromUnitAndValue(
         EtherUnit.wei,
-        (amount * _weiInEth).toBigInt(),
+        (amount * weiInEth).toBigInt(),
       ),
     ),
+    chainId: 4, // Rinkeby chain ID.
   );
+}
+
+/// Gets the ETH balance in Wei.
+Future<BigInt> getEtherBalance(String mnemonic) async {
+  final privateKey = EthPrivateKey.fromHex(mnemonicToEntropy(mnemonic));
+  final balance = await _ethClient.getBalance(privateKey.address);
+  return balance.getInWei;
 }

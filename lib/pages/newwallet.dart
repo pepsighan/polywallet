@@ -12,12 +12,12 @@ class NewWalletPage extends StatefulWidget {
 }
 
 class _NewWalletPageState extends State<NewWalletPage> {
-  final _passphrase = generateMnemonic();
+  final _mnemonic = generateMnemonic();
 
   Future<void> _onCopy() async {
     final primaryColor = Theme.of(context).primaryColor;
 
-    await Clipboard.setData(ClipboardData(text: _passphrase));
+    await Clipboard.setData(ClipboardData(text: _mnemonic));
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: const Text('Copied the recovery phrase to clipboard.'),
       backgroundColor: primaryColor,
@@ -25,7 +25,7 @@ class _NewWalletPageState extends State<NewWalletPage> {
   }
 
   Future<void> _onContinue() async {
-    WalletState.of(context).restoreWalletPassphrase(_passphrase);
+    WalletState.of(context).restoreWalletMnemonic(_mnemonic);
 
     // Now that the app the wallet is setup, remove all the previous
     // routes and go to the home page.
@@ -38,7 +38,7 @@ class _NewWalletPageState extends State<NewWalletPage> {
 
   @override
   Widget build(BuildContext context) {
-    final words = _passphrase.split(' ');
+    final words = _mnemonic.split(' ');
 
     return Scaffold(
       appBar: AppBar(

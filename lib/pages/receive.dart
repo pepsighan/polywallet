@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:polywallet/store/wallet.dart';
-import 'package:polywallet/tokens.dart';
+import 'package:polywallet/tokens/tokens.dart';
 
 class ReceivePage extends StatefulWidget {
   const ReceivePage({Key? key, required this.token}) : super(key: key);
@@ -18,7 +18,7 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   void initState() {
     super.initState();
-    final mnemonic = WalletState.of(context).passphrase;
+    final mnemonic = WalletState.of(context).mnemonic;
     _future = widget.token.publicAddressForMnemonic(mnemonic!);
   }
 

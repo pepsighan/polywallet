@@ -8,11 +8,11 @@ final _solanaClient =
 
 /// Sends SOL [amount] to the destination [address].
 Future<void> sendSol(
-  String passphrase,
+  String mnemonic,
   String address,
   Decimal amount,
 ) async {
-  final wallet = await Ed25519HDKeyPair.fromMnemonic(passphrase);
+  final wallet = await Ed25519HDKeyPair.fromMnemonic(mnemonic);
   final lamports =
       (amount * Decimal.fromInt(lamportsPerSol)).toBigInt().toInt();
   await _solanaClient.transferLamports(
@@ -20,4 +20,11 @@ Future<void> sendSol(
     destination: address,
     lamports: lamports,
   );
+}
+
+/// Gets the SOL balance in lamports.
+Future<BigInt> getSolBalance(String mnemonic) async {
+  final wallet = await Ed25519HDKeyPair.fromMnemonic(mnemonic);
+  final balance = await _solanaClient.rpcClient.getBalance(wallet.address);
+  return BigInt.from(balance);
 }
