@@ -1,8 +1,8 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:polywallet/send/send.dart';
-import 'package:polywallet/tokens.dart';
+import 'package:polywallet/tokens/send.dart';
+import 'package:polywallet/tokens/tokens.dart';
 import 'package:polywallet/widgets/loadingspinner.dart';
 
 class SendPage extends StatefulWidget {

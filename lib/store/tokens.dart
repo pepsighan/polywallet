@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:polywallet/tokens.dart';
+import 'package:polywallet/tokens/tokens.dart';
 
 class TokenState extends ChangeNotifier {
   final Map<Token, TokenMeta> _tokenMap = {};

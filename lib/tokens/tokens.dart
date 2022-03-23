@@ -1,6 +1,6 @@
 import 'package:alan/alan.dart' as alan;
 import 'package:bip39/bip39.dart';
-import 'package:polywallet/send/cosmos.dart';
+import 'package:polywallet/tokens/cosmos.dart';
 import 'package:solana/solana.dart';
 import 'package:web3dart/web3dart.dart';
 

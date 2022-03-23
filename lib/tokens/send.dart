@@ -1,11 +1,11 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
-import 'package:polywallet/send/cosmos.dart';
-import 'package:polywallet/send/ethereum.dart';
-import 'package:polywallet/send/polygon.dart';
-import 'package:polywallet/send/solana.dart';
 import 'package:polywallet/store/wallet.dart';
-import 'package:polywallet/tokens.dart';
+import 'package:polywallet/tokens/cosmos.dart';
+import 'package:polywallet/tokens/ethereum.dart';
+import 'package:polywallet/tokens/polygon.dart';
+import 'package:polywallet/tokens/solana.dart';
+import 'package:polywallet/tokens/tokens.dart';
 
 const _tokenSender = {
   Token.cosmos: sendAtom,

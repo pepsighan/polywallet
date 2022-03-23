@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:polywallet/store/wallet.dart';
-import 'package:polywallet/tokens.dart';
+import 'package:polywallet/tokens/tokens.dart';
 
 class ReceivePage extends StatefulWidget {
   const ReceivePage({Key? key, required this.token}) : super(key: key);
