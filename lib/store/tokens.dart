@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:polywallet/store/wallet.dart';
 import 'package:polywallet/tokens/cosmos.dart';
@@ -6,6 +7,7 @@ import 'package:polywallet/tokens/polygon.dart';
 import 'package:polywallet/tokens/solana.dart';
 import 'package:polywallet/tokens/tokens.dart';
 import 'package:provider/provider.dart';
+import 'package:solana/solana.dart';
 
 final _tokenBalance = {
   Token.cosmos: getAtomBalance,
@@ -18,17 +20,10 @@ final _tokenBalance = {
 class TokenState extends ChangeNotifier {
   final Map<Token, TokenMeta> _tokenMap = {};
 
-  TokenMeta get cosmos =>
-      _tokenMap[Token.cosmos] ?? TokenMeta(balance: BigInt.zero);
-
-  TokenMeta? get ethereum =>
-      _tokenMap[Token.ethereum] ?? TokenMeta(balance: BigInt.zero);
-
-  TokenMeta? get polygon =>
-      _tokenMap[Token.polygon] ?? TokenMeta(balance: BigInt.zero);
-
-  TokenMeta? get solana =>
-      _tokenMap[Token.solana] ?? TokenMeta(balance: BigInt.zero);
+  /// Gets the information for a given token.
+  TokenMeta get(Token token) {
+    return _tokenMap[token] ?? TokenMeta(token: token, balance: BigInt.zero);
+  }
 
   /// Load the balance for the token.
   Future<void> loadBalance(
@@ -38,7 +33,7 @@ class TokenState extends ChangeNotifier {
     final mnemonic = WalletState.of(context).mnemonic!;
     final getBalance = _tokenBalance[token]!;
     final balance = await getBalance(mnemonic);
-    _tokenMap[token] = TokenMeta(balance: balance);
+    _tokenMap[token] = TokenMeta(token: token, balance: balance);
     notifyListeners();
   }
 
@@ -55,8 +50,31 @@ class TokenState extends ChangeNotifier {
 
 /// The information about a token in the context of the wallet.
 class TokenMeta {
+  /// The token to which this object pertains to.
+  final Token token;
+
   /// The balance of the token for the wallet in the most basic unit.
   final BigInt balance;
 
-  TokenMeta({required this.balance});
+  TokenMeta({required this.token, required this.balance});
+
+  /// Balance of the token in the main unit.
+  String balanceInPrimaryUnit() {
+    switch (token) {
+      case Token.cosmos:
+        return (Decimal.fromBigInt(balance) / uatomInAtom)
+            .toDecimal()
+            .toString();
+      case Token.ethereum:
+        return (Decimal.fromBigInt(balance) / weiInEth).toDecimal().toString();
+      case Token.polygon:
+        return (Decimal.fromBigInt(balance) / weiInMatic)
+            .toDecimal()
+            .toString();
+      case Token.solana:
+        return (Decimal.fromBigInt(balance) / Decimal.fromInt(lamportsPerSol))
+            .toDecimal()
+            .toString();
+    }
+  }
 }

@@ -2,7 +2,7 @@ import 'package:alan/alan.dart';
 import 'package:alan/proto/cosmos/bank/v1beta1/export.dart' as bank;
 import 'package:decimal/decimal.dart';
 
-final _uatomInAtom = Decimal.fromInt(1000000);
+final uatomInAtom = Decimal.fromInt(1000000);
 final cosmosNetworkInfo = NetworkInfo.fromSingleHost(
   bech32Hrp: 'cosmos',
   host: 'https://rpc.one.theta-devnet.polypore.xyz',
@@ -25,7 +25,7 @@ Future<void> sendAtom(
   message.amount.add(
     Coin.create()
       ..denom = 'uatom'
-      ..amount = (amount * _uatomInAtom).toBigInt().toString(),
+      ..amount = (amount * uatomInAtom).toBigInt().toString(),
   );
 
   // Sign the message and create a transaction.

@@ -9,7 +9,7 @@ final _ethClient = Web3Client(
   _httpClient,
 );
 
-final _weiInMatic = Decimal.fromInt(10).pow(18);
+final weiInMatic = Decimal.fromInt(10).pow(18);
 
 /// Sends MATIC [amount] to the destination [address].
 Future<void> sendMatic(
@@ -24,7 +24,7 @@ Future<void> sendMatic(
       to: EthereumAddress.fromHex(address),
       value: EtherAmount.fromUnitAndValue(
         EtherUnit.wei,
-        (amount * _weiInMatic).toBigInt(),
+        (amount * weiInMatic).toBigInt(),
       ),
     ),
   );

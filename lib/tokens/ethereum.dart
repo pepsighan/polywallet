@@ -9,7 +9,7 @@ final _ethClient = Web3Client(
   _httpClient,
 );
 
-final _weiInEth = Decimal.fromInt(10).pow(18);
+final weiInEth = Decimal.fromInt(10).pow(18);
 
 /// Sends ETH [amount] to the destination [address].
 Future<void> sendEther(
@@ -24,7 +24,7 @@ Future<void> sendEther(
       to: EthereumAddress.fromHex(address),
       value: EtherAmount.fromUnitAndValue(
         EtherUnit.wei,
-        (amount * _weiInEth).toBigInt(),
+        (amount * weiInEth).toBigInt(),
       ),
     ),
   );
