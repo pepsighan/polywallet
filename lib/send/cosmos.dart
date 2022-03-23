@@ -3,7 +3,7 @@ import 'package:alan/proto/cosmos/bank/v1beta1/export.dart';
 import 'package:decimal/decimal.dart';
 
 final _uatomInAtom = Decimal.fromInt(1000000);
-final _networkInfo = NetworkInfo.fromSingleHost(
+final cosmosNetworkInfo = NetworkInfo.fromSingleHost(
   bech32Hrp: 'cosmos',
   host: 'https://rpc.one.theta-devnet.polypore.xyz',
 );
@@ -15,7 +15,7 @@ Future<void> sendAtom(
   Decimal amount,
 ) async {
   // The wallet which is sending Atom.
-  final wallet = Wallet.derive(passphrase.split(' '), _networkInfo);
+  final wallet = Wallet.derive(passphrase.split(' '), cosmosNetworkInfo);
 
   // Create a message to send atom.
   final message = MsgSend.create()
@@ -28,11 +28,11 @@ Future<void> sendAtom(
   );
 
   // Sign the message and create a transaction.
-  final signer = TxSigner.fromNetworkInfo(_networkInfo);
+  final signer = TxSigner.fromNetworkInfo(cosmosNetworkInfo);
   final tx = await signer.createAndSign(wallet, [message]);
 
   // Send the transaction.
-  final txSender = TxSender.fromNetworkInfo(_networkInfo);
+  final txSender = TxSender.fromNetworkInfo(cosmosNetworkInfo);
   final response = await txSender.broadcastTx(tx);
 
   if (!response.isSuccessful) {

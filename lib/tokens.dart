@@ -1,3 +1,9 @@
+import 'package:alan/alan.dart' as alan;
+import 'package:bip39/bip39.dart';
+import 'package:polywallet/send/cosmos.dart';
+import 'package:solana/solana.dart';
+import 'package:web3dart/web3dart.dart';
+
 /// All the supported tokens in the wallet.
 enum Token {
   cosmos,
@@ -26,4 +32,19 @@ extension TokenExtension on Token {
 
   /// Gets the ticker name of the Token.
   String get ticker => _tokenTicker[this]!;
+
+  /// Gets the public address of the token for the given [mnemonic].
+  Future<String> publicAddressForMnemonic(String mnemonic) async {
+    switch (this) {
+      case Token.cosmos:
+        return alan.Wallet.derive(mnemonic.split(' '), cosmosNetworkInfo)
+            .bech32Address;
+      case Token.ethereum:
+      case Token.polygon:
+        return EthPrivateKey.fromHex(mnemonicToSeedHex(mnemonic)).address.hex;
+      case Token.solana:
+        final keypair = await Ed25519HDKeyPair.fromMnemonic(mnemonic);
+        return keypair.address;
+    }
+  }
 }
