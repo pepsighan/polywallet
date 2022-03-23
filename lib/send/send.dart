@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:polywallet/send/cosmos.dart';
 import 'package:polywallet/send/ethereum.dart';
@@ -17,7 +18,7 @@ Future<void> send(
   BuildContext context, {
   required Token token,
   required String address,
-  required double amount,
+  required Decimal amount,
 }) async {
   final passphrase = WalletState.of(context).passphrase;
   if (passphrase == null) {
@@ -31,5 +32,5 @@ Future<void> send(
 Future<void> _sendMatic(
   String passphrase,
   String address,
-  double amount,
+  Decimal amount,
 ) async {}

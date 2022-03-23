@@ -15,10 +15,8 @@ final _weiInEth = Decimal.fromInt(10).pow(18);
 Future<void> sendEther(
   String passphrase,
   String address,
-  double amount,
+  Decimal amount,
 ) async {
-  final amt = Decimal.parse(amount.toString());
-
   final privateKey = EthPrivateKey.fromHex(mnemonicToSeedHex(passphrase));
   await _ethClient.sendTransaction(
     privateKey,
@@ -26,7 +24,7 @@ Future<void> sendEther(
       to: EthereumAddress.fromHex(address),
       value: EtherAmount.fromUnitAndValue(
         EtherUnit.wei,
-        (amt * _weiInEth).toBigInt(),
+        (amount * _weiInEth).toBigInt(),
       ),
     ),
   );

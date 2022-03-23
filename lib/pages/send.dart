@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:polywallet/send/send.dart';
@@ -32,7 +33,7 @@ class _SendPageState extends State<SendPage> {
 
     final address = _recipientField.text;
     try {
-      final amount = double.parse(_amountField.text);
+      final amount = Decimal.parse(_amountField.text);
       await send(context,
           token: widget.token, address: address, amount: amount);
       _formKey.currentState!.reset();
