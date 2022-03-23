@@ -28,8 +28,11 @@ class HomePage extends StatelessWidget {
             Divider(key: Key(index.toString()), height: 0),
         itemBuilder: (context, index) => ListTile(
           key: Key(index.toString()),
-          // TODO: Show proper icons and coin value.
-          leading: const CircleAvatar(child: Icon(Icons.currency_bitcoin)),
+          leading: Image.asset(
+            Token.values[index].asset,
+            width: 40,
+            height: 40,
+          ),
           title: Text(Token.values[index].asString),
           trailing: Text('0 ${Token.values[index].ticker}'),
           contentPadding: const EdgeInsets.symmetric(

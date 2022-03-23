@@ -21,9 +21,10 @@ class TokenPage extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.only(top: 32),
-            child: const CircleAvatar(
-              child: Icon(Icons.currency_bitcoin, size: 32),
-              minRadius: 32,
+            child: Image.asset(
+              token.asset,
+              width: 64,
+              height: 64,
             ),
           ),
           Container(

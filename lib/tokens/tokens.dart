@@ -26,12 +26,22 @@ const _tokenTicker = {
   Token.solana: 'SOL',
 };
 
+const _tokenAsset = {
+  Token.cosmos: 'assets/crypto/atom.png',
+  Token.ethereum: 'assets/crypto/eth.png',
+  Token.polygon: 'assets/crypto/matic.png',
+  Token.solana: 'assets/crypto/sol.png',
+};
+
 extension TokenExtension on Token {
   /// Gets the printable value of Token.
   String get asString => _tokenAsString[this]!;
 
   /// Gets the ticker name of the Token.
   String get ticker => _tokenTicker[this]!;
+
+  /// Gets the logo asset of the Token.
+  String get asset => _tokenAsset[this]!;
 
   /// Gets the public address of the token for the given [mnemonic].
   Future<String> publicAddressForMnemonic(String mnemonic) async {

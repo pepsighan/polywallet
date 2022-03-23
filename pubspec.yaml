@@ -28,3 +28,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/crypto/atom.png
+    - assets/crypto/eth.png
+    - assets/crypto/matic.png
+    - assets/crypto/sol.png
