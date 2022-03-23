@@ -46,35 +46,38 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: ListView.separated(
-        separatorBuilder: (context, index) =>
-            Divider(key: Key(index.toString()), height: 0),
-        itemBuilder: (context, index) => Consumer<TokenState>(
-          builder: (context, state, _) => ListTile(
-            key: Key(index.toString()),
-            leading: Image.asset(
-              Token.values[index].asset,
-              width: 40,
-              height: 40,
+      body: Consumer<TokenState>(
+        builder: (context, state, _) => RefreshIndicator(
+          onRefresh: () => state.loadAllBalances(context),
+          child: ListView.separated(
+            separatorBuilder: (context, index) =>
+                Divider(key: Key(index.toString()), height: 0),
+            itemBuilder: (context, index) => ListTile(
+              key: Key(index.toString()),
+              leading: Image.asset(
+                Token.values[index].asset,
+                width: 40,
+                height: 40,
+              ),
+              title: Text(Token.values[index].asString),
+              trailing: Text(
+                  '${state.get(Token.values[index]).balanceInPrimaryUnit()} ${Token.values[index].ticker}'),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 4,
+                horizontal: 16,
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TokenPage(token: Token.values[index]),
+                  ),
+                );
+              },
             ),
-            title: Text(Token.values[index].asString),
-            trailing: Text(
-                '${state.get(Token.values[index]).balanceInPrimaryUnit()} ${Token.values[index].ticker}'),
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 4,
-              horizontal: 16,
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TokenPage(token: Token.values[index]),
-                ),
-              );
-            },
+            itemCount: Token.values.length,
           ),
         ),
-        itemCount: Token.values.length,
       ),
     );
   }
