@@ -18,7 +18,7 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   void initState() {
     super.initState();
-    final mnemonic = WalletState.of(context).passphrase;
+    final mnemonic = WalletState.of(context).mnemonic;
     _future = widget.token.publicAddressForMnemonic(mnemonic!);
   }
 

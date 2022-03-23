@@ -21,7 +21,7 @@ class _ExistingWalletPageState extends State<ExistingWalletPage> {
 
     // Store the wallet private keys locally.
     final wallet = WalletState.of(context);
-    wallet.restoreWalletPassphrase(_recoveryPhraseController.text);
+    wallet.restoreWalletMnemonic(_recoveryPhraseController.text);
 
     // Now that the app the wallet is setup, remove all the previous
     // routes and go to the home page.

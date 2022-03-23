@@ -8,11 +8,11 @@ final _solanaClient =
 
 /// Sends SOL [amount] to the destination [address].
 Future<void> sendSol(
-  String passphrase,
+  String mnemonic,
   String address,
   Decimal amount,
 ) async {
-  final wallet = await Ed25519HDKeyPair.fromMnemonic(passphrase);
+  final wallet = await Ed25519HDKeyPair.fromMnemonic(mnemonic);
   final lamports =
       (amount * Decimal.fromInt(lamportsPerSol)).toBigInt().toInt();
   await _solanaClient.transferLamports(

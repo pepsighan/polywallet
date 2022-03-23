@@ -13,11 +13,11 @@ final _weiInMatic = Decimal.fromInt(10).pow(18);
 
 /// Sends MATIC [amount] to the destination [address].
 Future<void> sendMatic(
-  String passphrase,
+  String mnemonic,
   String address,
   Decimal amount,
 ) async {
-  final privateKey = EthPrivateKey.fromHex(mnemonicToSeedHex(passphrase));
+  final privateKey = EthPrivateKey.fromHex(mnemonicToSeedHex(mnemonic));
   await _ethClient.sendTransaction(
     privateKey,
     Transaction(

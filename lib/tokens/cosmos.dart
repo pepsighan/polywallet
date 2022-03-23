@@ -11,12 +11,12 @@ final _bankClient = bank.QueryClient(cosmosNetworkInfo.gRPCChannel);
 
 /// Sends ATOM [amount] to the destination [address].
 Future<void> sendAtom(
-  String passphrase,
+  String mnemonic,
   String address,
   Decimal amount,
 ) async {
   // The wallet which is sending Atom.
-  final wallet = Wallet.derive(passphrase.split(' '), cosmosNetworkInfo);
+  final wallet = Wallet.derive(mnemonic.split(' '), cosmosNetworkInfo);
 
   // Create a message to send atom.
   final message = bank.MsgSend.create()

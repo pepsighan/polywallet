@@ -21,11 +21,11 @@ Future<void> send(
   required String address,
   required Decimal amount,
 }) async {
-  final passphrase = WalletState.of(context).passphrase;
-  if (passphrase == null) {
+  final mnemonic = WalletState.of(context).mnemonic;
+  if (mnemonic == null) {
     throw Exception('cannot send if no wallet');
   }
 
   final sender = _tokenSender[token]!;
-  return await sender(passphrase, address, amount);
+  return await sender(mnemonic, address, amount);
 }

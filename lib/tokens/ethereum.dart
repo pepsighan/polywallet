@@ -13,11 +13,11 @@ final _weiInEth = Decimal.fromInt(10).pow(18);
 
 /// Sends ETH [amount] to the destination [address].
 Future<void> sendEther(
-  String passphrase,
+  String mnemonic,
   String address,
   Decimal amount,
 ) async {
-  final privateKey = EthPrivateKey.fromHex(mnemonicToSeedHex(passphrase));
+  final privateKey = EthPrivateKey.fromHex(mnemonicToSeedHex(mnemonic));
   await _ethClient.sendTransaction(
     privateKey,
     Transaction(
