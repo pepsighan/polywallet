@@ -2,6 +2,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:polywallet/send/cosmos.dart';
 import 'package:polywallet/send/ethereum.dart';
+import 'package:polywallet/send/polygon.dart';
 import 'package:polywallet/send/solana.dart';
 import 'package:polywallet/store/wallet.dart';
 import 'package:polywallet/tokens.dart';
@@ -9,7 +10,7 @@ import 'package:polywallet/tokens.dart';
 const _tokenSender = {
   Token.cosmos: sendAtom,
   Token.ethereum: sendEther,
-  Token.polygon: _sendMatic,
+  Token.polygon: sendMatic,
   Token.solana: sendSol,
 };
 
@@ -28,9 +29,3 @@ Future<void> send(
   final sender = _tokenSender[token]!;
   return await sender(passphrase, address, amount);
 }
-
-Future<void> _sendMatic(
-  String passphrase,
-  String address,
-  Decimal amount,
-) async {}
