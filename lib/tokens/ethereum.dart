@@ -31,7 +31,8 @@ Future<void> sendEther(
 }
 
 /// Gets the ETH balance in Wei.
-Future<EtherAmount> getEtherBalance(String mnemonic) async {
+Future<BigInt> getEtherBalance(String mnemonic) async {
   final privateKey = EthPrivateKey.fromHex(mnemonicToSeedHex(mnemonic));
-  return await _ethClient.getBalance(privateKey.address);
+  final balance = await _ethClient.getBalance(privateKey.address);
+  return balance.getInWei;
 }

@@ -42,7 +42,7 @@ Future<void> sendAtom(
 }
 
 /// Gets the Atom balance in uAtom.
-Future<int> getAtomBalance(String mnemonic) async {
+Future<BigInt> getAtomBalance(String mnemonic) async {
   final wallet = Wallet.derive(mnemonic.split(' '), cosmosNetworkInfo);
 
   final response = await _bankClient.balance(bank.QueryBalanceRequest(
@@ -50,5 +50,5 @@ Future<int> getAtomBalance(String mnemonic) async {
     denom: 'uatom',
   ));
 
-  return int.parse(response.balance.amount);
+  return BigInt.parse(response.balance.amount);
 }
